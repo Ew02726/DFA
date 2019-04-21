@@ -1,5 +1,4 @@
 package projectTF;
-
 import java.io.*;
 import java.util.*;
 
@@ -50,7 +49,7 @@ public class Main {
 				
 				allEdges = new ArrayList<Edge>();
 				String[] transitionStates = list.toArray(new String[0]); // transitionStates[i].charAt(1) is state, transitionStates[i].charAt(3) is input, transitionStates[i].charAt(7) is destination
-				for (int z = 0; z < transitionStates.length - 1; z++) {
+				for (int z = 0; z < transitionStates.length; z++) {
 					allEdges.add(new Edge(transitionStates[z].charAt(3), getVertex(transitionStates[z].charAt(1)), getVertex(transitionStates[z].charAt(7))));
 				}
 
