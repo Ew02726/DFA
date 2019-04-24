@@ -1,7 +1,6 @@
 package projectTF;
 
 public class Edge {
-	
 	char input;
 	Vertex startV;
 	Vertex endV;
@@ -13,5 +12,4 @@ public class Edge {
 		
 		startV.addEdge(this);
 	}
-	
 }
