@@ -3,7 +3,6 @@ package projectTF;
 import java.util.*;
 
 public class Vertex {
-	
 	ArrayList<Edge> edgeList = new ArrayList<Edge>();
 	private char name;
 	
@@ -29,5 +28,4 @@ public class Vertex {
 		}
 		return hold;
 	}
-
 }
