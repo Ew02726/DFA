@@ -115,10 +115,13 @@ public class Main extends Application {
 		});
 
 		VBox vbox = new VBox();
+		vbox.setLayoutX(80);
+		vbox.setLayoutY(20);
+		vbox.setSpacing(20);
 		vbox.getChildren().addAll(opendfaBtn, stringLbl, stringArea, insertStringBtn, stringTestLbl, resultLbl);
 		Pane root = new Pane();
 		root.getChildren().add(vbox);
-		primaryStage.setScene(new Scene(root, 300, 300));
+		primaryStage.setScene(new Scene(root, 300, 200));
 		primaryStage.show();
 	}
 
