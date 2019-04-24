@@ -3,11 +3,9 @@ package projectTF;
 import java.util.*;
 
 public class Graph {
-	
 	ArrayList<Vertex> acceptingStates = new ArrayList<Vertex>();
 	Vertex startState;
 	Vertex currentState;
-	
 	
 	Graph (ArrayList<Vertex> acceptingStates, Vertex startState){
 		this.startState = startState;
@@ -27,5 +25,4 @@ public class Graph {
 			return false;
 		}
 	}
-	
 }
