@@ -5,10 +5,8 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -18,24 +16,23 @@ import java.util.*;
 
 
 public class Main extends Application {
+	private String alphabet;
+	private String states;
+	private Vertex startState;
+	private ArrayList<Vertex> acceptingStates;
+	private ArrayList<Vertex> allStates;
+	private ArrayList<Edge> allEdges;
+	private Label resultLbl;
+	public String userStr;
+	public String strTest;
+	
 
-	private static String alphabet;
-	private static String states;
-	private static Vertex startState;
-	private static ArrayList<Vertex> acceptingStates;
-	private static ArrayList<Vertex> allStates;
-	private static ArrayList<Edge> allEdges;
-	Scanner scanner = new Scanner(System.in);
-
-	public static String userStr;
-	public static String strTest;
-
-	public static File selectedFile;
-	public static Label stringTestLbl;
+	public File selectedFile;
+	public Label stringTestLbl;
 
 	@Override
 	public void start(Stage primaryStage){
-		primaryStage.setTitle("Theoretical Project");
+		primaryStage.setTitle("DFA Tester");
 
 		Button opendfaBtn = new Button();
 		opendfaBtn.setText("Choose File");
@@ -47,6 +44,9 @@ public class Main extends Application {
 
 		Label stringLbl = new Label();
 		stringLbl.setText("Enter your string:");
+		
+		resultLbl = new Label();
+		resultLbl.setText("");
 
 		FileChooser dfaChooser = new FileChooser();
 
@@ -69,11 +69,9 @@ public class Main extends Application {
 		insertStringBtn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				setString(stringArea.getText());
-				File dfa = importDFA();
+				userStr = stringArea.getText();
 
-
-				try (BufferedReader br = new BufferedReader(new FileReader(dfa))){
+				try (BufferedReader br = new BufferedReader(new FileReader(selectedFile))){
 					alphabet = br.readLine();
 					alphabet = alphabet.replaceAll("[^a-zA-Z0-9]","");//this removes all symbols and leaves only letters
 
@@ -117,15 +115,11 @@ public class Main extends Application {
 		});
 
 		VBox vbox = new VBox();
-		vbox.getChildren().addAll(opendfaBtn, stringLbl, stringArea, insertStringBtn, stringTestLbl);
+		vbox.getChildren().addAll(opendfaBtn, stringLbl, stringArea, insertStringBtn, stringTestLbl, resultLbl);
 		Pane root = new Pane();
 		root.getChildren().add(vbox);
-		primaryStage.setScene(new Scene(root, 150, 300));
+		primaryStage.setScene(new Scene(root, 300, 300));
 		primaryStage.show();
-	}
-
-	public void setString(String str){
-		userStr = str;
 	}
 
 	public static void main(String args[]) {
@@ -133,7 +127,7 @@ public class Main extends Application {
 	}
 	
 
-	public static Vertex getVertex(char c){
+	public Vertex getVertex(char c){
 		Vertex hold = null;
 		for (int i = 0; i < allStates.size(); i++) {
 			if (allStates.get(i).getName() == c) {
@@ -144,39 +138,16 @@ public class Main extends Application {
 		return hold;
 	}
 	
-	public static void testStr(Graph graph) {
-		Scanner scanner = new Scanner(System.in);
-	    System.out.print("Enter your string: ");
-	    String userStr = scanner.next();
-
-	    
+	public void testStr(Graph graph) {
 	    Boolean accept = false;
 	    for (int i = 0; i < userStr.length(); i++) {
 	    	accept = graph.traverseGraph(userStr.charAt(i));
 	    }
 	    
 	    if (accept == true) {
-	    	System.out.println("This string is accepted by the language");
+	    	resultLbl.setText("This string is accepted by the language.");
+	    } else {
+	    	resultLbl.setText("This string is not accepted by the language.");
 	    }
-	    
-	    else {
-	    	System.out.println("This string is not accepted by the language");
-	    }
-	}
-	
-	public static File importDFA(){
-		File dfa = new File("/Users/hayesbarber/Desktop/DFA-Test.txt");
-
-		try{
-			BufferedReader br = new BufferedReader(new FileReader(dfa));
-		} catch (FileNotFoundException fnf1){
-			System.out.println("Your file could not be found. Please input the path of your dfa file.");
-			Scanner input = new Scanner(System.in);
-			dfa = new File(input.next());
-		}
-
-		return dfa;
-	}
-
-		
+	}	
 }
